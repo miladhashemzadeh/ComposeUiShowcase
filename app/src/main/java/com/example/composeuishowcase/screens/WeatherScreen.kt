@@ -2,6 +2,7 @@ package com.example.composeuishowcase.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.example.composeuishowcase.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,16 +21,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.composeuishowcase.R
 import com.example.composeuishowcase.data.CityInfo
 import com.example.composeuishowcase.data.WeatherDataGenerator
+import com.example.composeuishowcase.theme.LocalCustomGradients
 
 @Composable
 fun WeatherScreen(
-    cityName: String,
-    onNavigateBack: () -> Unit
+    cityName: String, onNavigateBack: () -> Unit
 ) {
     val weatherGenerator = WeatherDataGenerator()
-    val cityInfo = weatherGenerator.generateRandomCityInfo().copy(countryName = cityName)
+    val cityInfo = weatherGenerator.generateRandomCityInfo()
+        .copy(countryName = cityName) // Override countryName with provided cityName
 
     Column(
         modifier = Modifier
@@ -39,13 +41,10 @@ fun WeatherScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WeatherItem(
-            cityInfo = cityInfo,
-            windCondition = "Fast Wind",
-            weatherGenerator = weatherGenerator
+            cityInfo = cityInfo, windCondition = "Fast Wind", weatherGenerator = weatherGenerator
         )
         Button(
-            onClick = onNavigateBack,
-            modifier = Modifier
+            onClick = onNavigateBack, modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
         ) {
@@ -56,61 +55,60 @@ fun WeatherScreen(
 
 @Composable
 fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: WeatherDataGenerator) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-
+    val customGradients = LocalCustomGradients.current
+    Box {
         Image(
-            painter = painterResource(id = R.drawable.weather_item_rectangle),
-            contentDescription = "Weather Item Background",
             modifier = Modifier
-                .wrapContentHeight()
-                .fillMaxWidth(),
-            alpha = 1f
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .wrapContentHeight(),
+            painter = painterResource(R.drawable.weather_item_rectangle),
+            contentDescription = ""
         )
-
-
-        Column {
-            Text(
-                text = "${cityInfo.temperature.toInt()}°",
-                fontSize = 48.sp,
-                color = Color.White,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            Text(
-                text = "H:${(cityInfo.temperature + 1).toInt()}° L:${(cityInfo.temperature - 3).toInt()}°",
-                fontSize = 14.sp,
-                color = Color.White,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            Text(
-                text = "${cityInfo.countryName}, ${cityInfo.countryName}",
-                fontSize = 16.sp,
-                color = Color.White
-            )
-        }
-
-
-        Column(horizontalAlignment = Alignment.End) {
-            Image(
-                painter = weatherGenerator.getWeatherIcon(cityInfo.conditionName),
-                contentDescription = "Weather Icon for ${cityInfo.conditionName}",
-                modifier = Modifier
-                    .width(80.dp)
-                    .height(60.dp)
-            )
-            Text(
-                text = windCondition,
-                fontSize = 14.sp,
-                color = Color.White,
-                modifier = Modifier.padding(top = 4.dp)
-            )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp)
+                .clip(RoundedCornerShape(16.dp))
+                //.background(customGradients.Gradient3)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = "${cityInfo.temperature.toInt()}°",
+                    fontSize = 48.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Text(
+                    text = "H:${(cityInfo.temperature + 1).toInt()}° L:${(cityInfo.temperature - 3).toInt()}°",
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(bottom = 4.dp)
+                )
+                Text(
+                    text = "${cityInfo.countryName}, ${cityInfo.countryName}",
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+            }
+            Column(horizontalAlignment = Alignment.End) {
+                Image(
+                    painter = weatherGenerator.getWeatherIcon(cityInfo.conditionName),
+                    contentDescription = "Weather Icon for ${cityInfo.conditionName}",
+                    modifier = Modifier
+                        .width(80.dp)
+                        .height(60.dp)
+                )
+                Text(
+                    text = windCondition,
+                    fontSize = 14.sp,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
     }
 }
