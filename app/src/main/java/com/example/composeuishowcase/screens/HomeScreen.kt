@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composeuishowcase.data.CityInfo
 import com.example.composeuishowcase.data.WeatherDataGenerator
-import com.example.composeuishowcase.navigation.Routes
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
