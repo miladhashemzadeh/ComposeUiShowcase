@@ -59,9 +59,6 @@ fun AppNavigation() {
         }
         composable(Routes.Catalog.route) {
             CatalogScreen(
-                onNavigateToWeather = { cityName ->
-                    navController.navigate(Routes.Weather.createRoute(cityName))
-                },
                 onNavigateBack = { navController.popBackStack() }
             )
         }
