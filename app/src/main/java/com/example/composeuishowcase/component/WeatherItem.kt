@@ -27,7 +27,7 @@ import com.example.composeuishowcase.data.WeatherDataGenerator
 import com.example.composeuishowcase.theme.LocalCustomGradients
 
 @Composable
-fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: WeatherDataGenerator,onItemClick: (CityInfo) -> Unit) {
+fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: WeatherDataGenerator, onItemClick: (CityInfo) -> Unit) {
     val customGradients = LocalCustomGradients.current
     Box(Modifier.clickable { onItemClick(cityInfo) }) {
         Image(
@@ -41,7 +41,7 @@ fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: Wea
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(150.dp)
+                .wrapContentHeight()
                 .clip(RoundedCornerShape(16.dp))
                 //.background(customGradients.Gradient3)
                 .padding(16.dp),
