@@ -35,7 +35,7 @@ fun CatalogScreen(
         WeatherItem(
             cityInfo = staticCityInfo,
             windCondition = "Fast Wind",
-            weatherGenerator = weatherGenerator
+            weatherGenerator = weatherGenerator,{}
         )
         Button(
             onClick = onNavigateBack,

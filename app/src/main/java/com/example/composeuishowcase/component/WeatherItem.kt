@@ -1,6 +1,7 @@
 package com.example.composeuishowcase.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,9 +27,9 @@ import com.example.composeuishowcase.data.WeatherDataGenerator
 import com.example.composeuishowcase.theme.LocalCustomGradients
 
 @Composable
-fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: WeatherDataGenerator) {
+fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: WeatherDataGenerator,onItemClick: (CityInfo) -> Unit) {
     val customGradients = LocalCustomGradients.current
-    Box {
+    Box(Modifier.clickable { onItemClick(cityInfo) }) {
         Image(
             modifier = Modifier
                 .fillMaxWidth()

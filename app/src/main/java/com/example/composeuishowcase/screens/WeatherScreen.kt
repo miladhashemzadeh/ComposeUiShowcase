@@ -29,7 +29,10 @@ fun WeatherScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WeatherItem(
-            cityInfo = cityInfo, windCondition = "Fast Wind", weatherGenerator = weatherGenerator
+            cityInfo = cityInfo,
+            windCondition = "Fast Wind",
+            weatherGenerator = weatherGenerator,
+            {}
         )
         Button(
             onClick = onNavigateBack, modifier = Modifier
