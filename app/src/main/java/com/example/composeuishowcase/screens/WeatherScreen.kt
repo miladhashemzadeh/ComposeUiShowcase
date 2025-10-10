@@ -10,15 +10,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composeuishowcase.component.WeatherItem
+import com.example.composeuishowcase.data.CityInfo
 import com.example.composeuishowcase.data.WeatherDataGenerator
 
 @Composable
 fun WeatherScreen(
-    cityName: String, onNavigateBack: () -> Unit
+    cityInfo: CityInfo,
+    onNavigateBack: () -> Unit
 ) {
     val weatherGenerator = WeatherDataGenerator()
     val cityInfo = weatherGenerator.generateRandomCityInfo()
-        .copy(countryName = cityName) // Override countryName with provided cityName
+        .copy(countryName = cityInfo.countryName)
 
     Column(
         modifier = Modifier

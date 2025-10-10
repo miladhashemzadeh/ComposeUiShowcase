@@ -3,27 +3,23 @@ package com.example.composeuishowcase
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeuishowcase.catalog.CatalogScreen
+import com.example.composeuishowcase.data.CityInfo
 import com.example.composeuishowcase.nav.Routes
 import com.example.composeuishowcase.screens.HomeScreen
 import com.example.composeuishowcase.screens.WeatherScreen
 import com.example.composeuishowcase.theme.ShowcaseTheme
+import kotlinx.serialization.json.Json
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +30,12 @@ class MainActivity : ComponentActivity() {
                     Surface(
                         modifier = Modifier
                             .padding(paddingValues)
-                            .fillMaxSize()
+                            .fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
                     ) {
                         AppNavigation()
                     }
                 }
-
             }
         }
     }
@@ -52,8 +48,8 @@ fun AppNavigation() {
         composable(Routes.Home.route) {
             HomeScreen(
                 onNavigateToCatalog = { navController.navigate(Routes.Catalog.route) },
-                onNavigateToWeather = { cityName ->
-                    navController.navigate(Routes.Weather.createRoute(cityName))
+                onNavigateToWeather = { cityInfoJson ->
+                    navController.navigate("${Routes.Weather.route}?cityInfo=$cityInfoJson")
                 }
             )
         }
@@ -63,9 +59,10 @@ fun AppNavigation() {
             )
         }
         composable(Routes.Weather.route) { backStackEntry ->
-            val cityName = backStackEntry.arguments?.getString("cityName") ?: "Unknown"
+            val cityInfoJson = backStackEntry.arguments?.getString("cityInfo") ?: ""
+            val cityInfo = Json.decodeFromString<CityInfo>(cityInfoJson)
             WeatherScreen(
-                cityName = cityName,
+                cityInfo = cityInfo,
                 onNavigateBack = { navController.popBackStack() }
             )
         }
