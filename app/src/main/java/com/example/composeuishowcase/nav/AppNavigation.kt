@@ -6,7 +6,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.composeuishowcase.catalog.CatalogScreen
 import com.example.composeuishowcase.data.CityInfo
+import com.example.composeuishowcase.screens.CityList
 import com.example.composeuishowcase.screens.HomeScreen
+import com.example.composeuishowcase.screens.WeatherList
 import com.example.composeuishowcase.screens.WeatherScreen
 import com.google.gson.Gson
 
@@ -17,11 +19,27 @@ fun AppNavigation() {
         composable(Routes.Home.route) {
             HomeScreen(
                 onNavigateToCatalog = { navController.navigate(Routes.Catalog.route) },
-                onNavigateToWeather = { cityInfoJson ->
+                onNavigateToCityList = { navController.navigate(Routes.CityList.route) },
+                onNavigateToWeatherList = { navController.navigate(Routes.WeatherList.route) }
+            )
+        }
+        composable(Routes.CityList.route) {
+            CityList(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToWeather = { cityInfoJson: String ->
                     navController.navigate("${Routes.Weather.route}?cityInfo=$cityInfoJson")
                 }
             )
         }
+        composable(Routes.CityList.route) {
+            WeatherList(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToWeather = { cityInfoJson: String ->
+                    navController.navigate("${Routes.Weather.route}?cityInfo=$cityInfoJson")
+                }
+            )
+        }
+
         composable(Routes.Catalog.route) {
             CatalogScreen(
                 onNavigateBack = { navController.popBackStack() }
@@ -32,7 +50,7 @@ fun AppNavigation() {
             val cityInfo = if (cityInfoJson.isNotEmpty()) {
                 Gson().fromJson(cityInfoJson, CityInfo::class.java)
             } else {
-                CityInfo("Unknown", 50, 0.0, 20.0, "Sunny") // Default CityInfo
+                CityInfo("Unknown", 50, 0.0, 20.0, "Sunny")
             }
             WeatherScreen(
                 cityInfo = cityInfo,
