@@ -36,7 +36,7 @@ object CustomGradients {
         )
     val Gradient1Horizontal: Brush
         @Composable get() = Brush.horizontalGradient(
-            listOf(Gradient1Start, Gradient1End)
+            listOf(Gradient1End, Gradient1Start)
         )
     val Gradient2Vertical: Brush
         @Composable get() = Brush.verticalGradient(

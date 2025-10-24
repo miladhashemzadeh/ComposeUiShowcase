@@ -72,14 +72,14 @@ fun WeatherItem(cityInfo: CityInfo, windCondition: String, weatherGenerator: Wea
                     painter = weatherGenerator.getWeatherIcon(cityInfo.conditionName),
                     contentDescription = "Weather Icon for ${cityInfo.conditionName}",
                     modifier = Modifier
-                        .width(80.dp)
-                        .height(60.dp)
+                        .width(120.dp)
+                        .height(100.dp)
                 )
                 Text(
                     text = windCondition,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = 4.dp, end = 16.dp)
                 )
             }
         }

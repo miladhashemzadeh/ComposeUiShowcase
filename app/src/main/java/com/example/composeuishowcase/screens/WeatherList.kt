@@ -1,5 +1,6 @@
 package com.example.composeuishowcase.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composeuishowcase.component.WeatherItem
 import com.example.composeuishowcase.data.WeatherDataGenerator
+import com.example.composeuishowcase.theme.LocalCustomGradients
 import com.google.gson.Gson
 
 @Composable
@@ -19,10 +21,12 @@ fun WeatherList(modifier: Modifier = Modifier,
                 onNavigateToWeather: (String) -> Unit,) {
     val weatherGenerator = WeatherDataGenerator()
     val cityList = List(50) { weatherGenerator.generateRandomCityInfo() }
+    val gradient = LocalCustomGradients.current.Gradient1Horizontal
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .background(gradient)
+            .padding(32.dp)
     ) {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp)
