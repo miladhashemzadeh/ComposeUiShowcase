@@ -1,13 +1,9 @@
 package com.example.composeuishowcase.screens
 
-import android.widget.ImageButton
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -17,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.composeuishowcase.R
+import com.example.composeuishowcase.theme.LocalCustomGradients
 
 @Composable
 fun HomeScreen(
@@ -40,21 +36,28 @@ fun HomeScreen(
     onNavigateToCityList: () -> Unit,
     onNavigateToWeatherList: () -> Unit,
 ) {
-
+    val gradient = LocalCustomGradients.current.Gradient2Horizontal
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        content = { paddingValues ->
-            CityDetail(
-                paddingValues,
+        modifier = Modifier.fillMaxSize()
+            .background(gradient),
+        topBar = {
+
+        },
+        content = { _ ->
+            CityDetail(modifier = modifier,
                 onNavigateToCatalog = onNavigateToCatalog,
             )
         },
         bottomBar = {
-            ImageBottomBar(modifier = modifier.fillMaxWidth(), onNavigateToCityList, onNavigateToWeatherList)
+            ImageBottomBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
+                onNavigateToCityList = onNavigateToCityList,
+                onNavigateToWeatherList = onNavigateToWeatherList
+            )
         }
     )
-
-
 }
 
 @Composable
@@ -122,8 +125,6 @@ fun BackgroundBottomBar(
     }
 }
 
-
-
 @Composable
 fun BottomBarFab(
     modifier: Modifier = Modifier,
@@ -163,5 +164,3 @@ fun BottomBarFab(
         )
     }
 }
-
-

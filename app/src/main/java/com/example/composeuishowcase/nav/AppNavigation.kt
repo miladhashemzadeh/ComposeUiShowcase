@@ -31,7 +31,7 @@ fun AppNavigation() {
                 }
             )
         }
-        composable(Routes.CityList.route) {
+        composable(Routes.WeatherList.route) {
             WeatherList(
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToWeather = { cityInfoJson: String ->
