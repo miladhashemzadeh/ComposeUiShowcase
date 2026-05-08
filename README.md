@@ -5,6 +5,8 @@
 
 ## What is this?
 
+![Showcase](img/screen.gif)
+
 **ComposeUiShowcase** is a Kotlin Android UI showcase built using Jetpack Compose.  
 It’s meant to serve as a living gallery of UI patterns, components, and animations — a place to explore, experiment, and learn.
 
